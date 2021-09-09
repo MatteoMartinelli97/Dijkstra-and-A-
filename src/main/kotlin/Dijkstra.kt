@@ -121,6 +121,10 @@ object Dijkstra {
             }
         }
 
+        return buildPath(source, target, prev)
+    }
+
+    private fun buildPath (source : Int, target : Int, prev : MutableMap<Int, Int>) : ArrayDeque<Int> {
         val path = ArrayDeque<Int>()
         var u = target
         path.add(u)
