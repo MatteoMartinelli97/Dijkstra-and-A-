@@ -73,7 +73,7 @@ class Graph<T>(
         neighbours[v]?.forEach {
             neighbours[it.first]?.removeIf { n -> n.first == v }
         }
-        neighbours.remove(v)
+        neighbours[v] = mutableListOf()
     }
 
     override fun toString(): String {
