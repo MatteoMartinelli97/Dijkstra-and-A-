@@ -5,25 +5,31 @@ import kotlin.math.sqrt
 /**
  * This object implements some common heuristic functions for a square (or rectangular) grid, where every
  * square is a node of the graph.
- * The name are given as [Int] numbers, from left to right, bottom to top as:
+ * The name are given as [Int] numbers, from left to right, top to bottom as:
  *
  * +-----------------+
  *
+ * | 0 | 1 | 2| 3| 4 |
+ *
+ * | 5 | 6 | 7| 8| 9 |
+ *
+ * |10|11|12|13|14|
+ *
+ * |15|16|17|18|19|
+ *
  * |20|21|22|23|24|
 
- * |15|16|17|18|19|
 
- * |10|11|12|13|14|
-
- * | 5 | 6 | 7| 8| 9 |
-
- * | 0 | 1 | 2| 3| 4 |
 
  * +-----------------+
  */
 
 object Heuristic2D {
 
+    /**
+     * [Manhattan distance](https://en.wikipedia.org/wiki/Taxicab_geometry)
+     * on a squared grid of side = [width]
+     */
     fun manhattan(width: Int): (Int, Int) -> Float {
         return { a, b ->
             val dx = abs(a - b) % width
@@ -57,6 +63,9 @@ object Heuristic2D {
         return diagonal(width, lateralCost = 1f, diagonalCost = sqrt(2f))
     }
 
+    /**
+     * Euclidean distance on a squared grid with side = [width]
+     */
     fun euclidean(width: Int): (Int, Int) -> Float {
         return { a, b ->
             val dx = abs(a - b) % width
