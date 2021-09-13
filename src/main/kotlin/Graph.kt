@@ -35,7 +35,7 @@ class Graph<T>(
 
  */
 
-    fun addVertex(v: T, edges: MutableList<Pair<T, Float>>) {
+    fun addVertex(v: T, edges: MutableList<Pair<T, Float>> = mutableListOf()) {
         V.add(v)
         neighbours[v] = edges
     }
