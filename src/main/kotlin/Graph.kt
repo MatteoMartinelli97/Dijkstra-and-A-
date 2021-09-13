@@ -1,13 +1,12 @@
 import java.lang.RuntimeException
 
-class Graph (
-    val V : MutableList<Int> = mutableListOf(),
+class Graph<T>(
+    val V: MutableList<T> = mutableListOf(),
     //val neighbours : MutableMap<Int, MutableMap<Int, Float>> = mutableMapOf(),
-    val neighbours : MutableMap<Int, MutableList<Pair<Int, Float>>> = mutableMapOf(),
-    val directed : Boolean = false
-)
-{
-    init{
+    val neighbours: MutableMap<T, MutableList<Pair<T, Float>>> = mutableMapOf(),
+    val directed: Boolean = false
+) {
+    init {
         for (v in V) {
             neighbours[v] = mutableListOf()
         }
@@ -36,29 +35,52 @@ class Graph (
 
  */
 
-    fun addVertex (v : Int, edges : MutableList<Pair<Int, Float>>) {
+    fun addVertex(v: T, edges: MutableList<Pair<T, Float>>) {
         V.add(v)
         neighbours[v] = edges
     }
 
-    fun addEdge (v : Int, u : Int, weight : Float) {
+    fun addEdge(v: T, u: T, weight: Float) {
         if (v in V) {
             neighbours[v]!!.add(Pair(u, weight))
             if (!directed) {
-                if (u in V ) {neighbours[u]!!.add(Pair(v, weight))}
-                else {throw RuntimeException("Trying to add edge of non existing vertex $u")}
+                if (u in V) {
+                    neighbours[u]!!.add(Pair(v, weight))
+                } else {
+                    throw RuntimeException("Trying to add edge of non existing vertex $u")
+                }
             }
-        }
-        else{
+        } else {
             throw RuntimeException("Trying to add edge of non existing vertex $v")
         }
+    }
+
+    fun removeEdge(v: T, u: T) {
+        if (v in V) {
+            neighbours[v]!!.removeIf { it.first == u }
+            if (!directed) {
+                if (u in V) neighbours[u]!!.removeIf { it.first == v }
+                else {
+                    throw RuntimeException("Trying to add edge of non existing vertex $u")
+                }
+            }
+        } else {
+            throw RuntimeException("Trying to add edge of non existing vertex $v")
+        }
+    }
+
+    fun removeVertex(v: T) {
+        neighbours[v]?.forEach {
+            neighbours[it.first]?.removeIf { n -> n.first == v }
+        }
+        neighbours.remove(v)
     }
 
     override fun toString(): String {
         var s = ""
         for (v in V) {
             s += "$v -> ("
-            neighbours[v]?.forEach{s += "$it"}
+            neighbours[v]?.forEach { s += "$it" }
             s += ")\n"
         }
         return s
@@ -66,6 +88,5 @@ class Graph (
 /*    fun length(a : Int, b: Int) : Float {
         return neighbours[a]?.get(b) ?: Float.POSITIVE_INFINITY
     }
-
  */
 }

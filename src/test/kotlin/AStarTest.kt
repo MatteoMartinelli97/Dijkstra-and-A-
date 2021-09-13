@@ -27,11 +27,10 @@ class AStarTest {
 
         }
         val path = AStar.targetShortestPath(graph, source = 0, target = 9, h)
-        assertTrue(path.pop() == 0)
-        assertTrue(path.pop() == 1)
-        assertTrue(path.pop() == 5)
-        assertTrue(path.pop() == 9)
-println(7/6)
+        assertTrue(path.removeFirst() == 0)
+        assertTrue(path.removeFirst() == 1)
+        assertTrue(path.removeFirst() == 5)
+        assertTrue(path.removeFirst() == 9)
 
     }
 }

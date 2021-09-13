@@ -1,9 +1,10 @@
 import java.awt.image.AreaAveragingScaleFilter
 import java.util.*
+import kotlin.collections.ArrayDeque
 
 object Dijkstra {
 
-    fun shortestPath(g: Graph, source: Int): Map<Int, Float> { //Pair<List<Int>, Float> {
+    fun shortestPath(g: Graph<Int>, source: Int): Map<Int, Float> { //Pair<List<Int>, Float> {
         if (source !in g.V) {
             throw RuntimeException("Source is not in graph vertices, cannot compute path!")
         }
@@ -73,7 +74,7 @@ object Dijkstra {
         return dist
     }
 
-    fun targetShortestPath (g: Graph, source: Int, target : Int) : ArrayDeque<Int>{
+    fun targetShortestPath (g: Graph<Int>, source: Int, target : Int) : ArrayDeque<Int>{
         if (source !in g.V) {
             throw RuntimeException("Source ($source) is not in graph vertices, cannot compute path!")
         }

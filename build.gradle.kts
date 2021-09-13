@@ -10,9 +10,23 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
+    maven {
+        url = uri("http://mvn.topobyte.de")
+    }
+    maven {
+        url = uri("http://mvn.slimjars.com")
+    }
+
 }
 
+
 dependencies {
+    implementation ("de.topobyte:osm4j-core:0.1.0")
+    implementation ("de.topobyte:osm4j-utils:0.1.3")
+    implementation ("de.topobyte:osm4j-xml:0.1.3")
+    implementation ("de.topobyte:osm4j-pbf:0.1.1")
+    implementation ("de.topobyte:osm4j-tbo:0.1.0")
+    implementation ("de.topobyte:osm4j-geometry:0.1.0")
     testImplementation(kotlin("test"))
 }
 

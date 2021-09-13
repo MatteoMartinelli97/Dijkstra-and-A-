@@ -1,7 +1,8 @@
 import java.util.*
+import kotlin.collections.ArrayDeque
 
 object AStar {
-    fun targetShortestPath (g: Graph, source: Int, target : Int, heuristic: (Int, Int) -> Float) : ArrayDeque<Int> {
+    fun targetShortestPath (g: Graph<Int>, source: Int, target : Int, heuristic: (Int, Int) -> Float) : ArrayDeque<Int> {
         if (source !in g.V) {
             throw RuntimeException("Source ($source) is not in graph vertices, cannot compute path!")
         }
@@ -43,6 +44,10 @@ object AStar {
             }
         }
         return buildPath(source, target, prev)
+    }
+
+    fun targetShortestPath (g: Grid2D, source: Int, target : Int, heuristic: (Int, Int) -> Float) : ArrayDeque<Int> {
+        return targetShortestPath(g.graph, source, target, heuristic)
     }
 
     /**

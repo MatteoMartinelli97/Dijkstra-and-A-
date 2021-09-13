@@ -55,10 +55,10 @@ class DijkstraTest {
         graph.addEdge(7, 8, 7f)
 
         val path = Dijkstra.targetShortestPath(graph, source=0, target = 8)
-        assertTrue(path.pop() == 0)
-        assertTrue(path.pop() == 1)
-        assertTrue(path.pop() == 2)
-        assertTrue(path.pop() == 8)
+        assertTrue(path.removeFirst() == 0)
+        assertTrue(path.removeFirst()== 1)
+        assertTrue(path.removeFirst() == 2)
+        assertTrue(path.removeFirst() == 8)
 
     }
 }
