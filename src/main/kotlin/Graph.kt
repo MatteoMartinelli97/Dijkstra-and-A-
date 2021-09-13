@@ -85,8 +85,4 @@ class Graph<T>(
         }
         return s
     }
-/*    fun length(a : Int, b: Int) : Float {
-        return neighbours[a]?.get(b) ?: Float.POSITIVE_INFINITY
-    }
- */
 }
