@@ -125,6 +125,12 @@ object Dijkstra {
         return buildPath(source, target, prev)
     }
 
+    fun targetShortestPath (g: Grid2D, source: Int, target : Int) : ArrayDeque<Int> {
+        if (g.getCoordinates(source) in g.blocks) throw java.lang.RuntimeException("Given source is a block." +
+                " Cannot start finding shortest path")
+        return targetShortestPath(g.graph, source, target)
+    }
+
     private fun buildPath (source : Int, target : Int, prev : MutableMap<Int, Int>) : ArrayDeque<Int> {
         val path = ArrayDeque<Int>()
         var u = target

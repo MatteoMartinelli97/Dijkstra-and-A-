@@ -13,11 +13,11 @@ fun main(args: Array<String>) {
         heuristic = Heuristic2D.euclidean(grid.nSquares)
     )
     val p2 = Dijkstra.targetShortestPath(
-        grid.graph,
+        grid,
         source = (0),
         target = grid.getId(target.first, target.second)
     )
 
-    GridFrame(grid, p)
+    GridFrame(grid, p2)
 
 }

@@ -47,6 +47,8 @@ object AStar {
     }
 
     fun targetShortestPath (g: Grid2D, source: Int, target : Int, heuristic: (Int, Int) -> Float) : ArrayDeque<Int> {
+        if (g.getCoordinates(source) in g.blocks) throw java.lang.RuntimeException("Given source is a block." +
+                " Cannot start finding shortest path")
         return targetShortestPath(g.graph, source, target, heuristic)
     }
 
