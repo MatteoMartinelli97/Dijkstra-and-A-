@@ -27,13 +27,22 @@ import kotlin.math.sqrt
 object Heuristic2D {
 
     /**
+     * A trivial heuristic that returns always 0.
+     * It is useful as it makes A* become Dijkstra
+     */
+    fun trivial (width : Int = 10) : (Int, Int) -> Float {
+        return {a, b, -> 0f}
+    }
+    /**
      * [Manhattan distance](https://en.wikipedia.org/wiki/Taxicab_geometry)
      * on a squared grid of side = [width]
      */
     fun manhattan(width: Int): (Int, Int) -> Float {
         return { a, b ->
-            val dx = abs(a - b) % width
-            val dy = abs(a - b) / width
+            val A = getCoordinates(a, width)
+            val B = getCoordinates(b, width)
+            val dx = abs(A.second - B.second)
+            val dy = abs(A.first - B.first)
             (dx + dy).toFloat()
         }
     }
@@ -48,8 +57,10 @@ object Heuristic2D {
 
     fun diagonal(width : Int, lateralCost : Float = 1f, diagonalCost : Float = 1f): (Int, Int) -> Float {
         return { a, b ->
-            val dx = abs(a - b) % width
-            val dy = abs(a - b) / width
+            val A = getCoordinates(a, width)
+            val B = getCoordinates(b, width)
+            val dx = abs(A.second - B.second)
+            val dy = abs(A.first - B.first)
             lateralCost * (dx + dy) + (diagonalCost - 2f * lateralCost) * min(dx, dy)
         }
     }
@@ -68,9 +79,17 @@ object Heuristic2D {
      */
     fun euclidean(width: Int): (Int, Int) -> Float {
         return { a, b ->
-            val dx = abs(a - b) % width
-            val dy = abs(a - b) / width
+            val A = getCoordinates(a, width)
+            val B = getCoordinates(b, width)
+            val dx = abs(A.second - B.second)
+            val dy = abs(A.first - B.first)
             sqrt( (dx*dx + dy*dy).toFloat() )
         }
+    }
+
+    private fun getCoordinates(id : Int, width: Int) : Pair<Int, Int> {
+        val row = id / width
+        val col = id % width
+        return Pair(row, col)
     }
 }
