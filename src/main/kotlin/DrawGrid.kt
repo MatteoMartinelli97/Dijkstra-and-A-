@@ -2,13 +2,14 @@ import java.awt.*
 import javax.swing.JFrame
 import javax.swing.JPanel
 
-class GridFrame(g :Grid2D, path: ArrayDeque<Int>) : JFrame("Graph") {
+class GridFrame(g :Grid2D, path: ArrayDeque<Int>, nodes: MutableList<Int>? = null, color: Color = Color.CYAN, title : String) : JFrame(title) {
 
     init {
         defaultCloseOperation = EXIT_ON_CLOSE
-        val grid = DrawGrid(g)
+        val grid = DrawGrid(g, color)
         contentPane.add(grid)
         grid.addPath(path)
+        if (nodes != null) grid.addVisitedNodes(nodes)
         val source = g.getCoordinates(path.first())
         val target = g.getCoordinates(path.last())
         grid.setSource(source.first, source.second)
@@ -17,14 +18,21 @@ class GridFrame(g :Grid2D, path: ArrayDeque<Int>) : JFrame("Graph") {
         setLocationRelativeTo(null)
         isVisible = true
     }
+
+    fun addNodes(nodes : MutableList<Int>) {
+
+    }
 }
 
 
-class DrawGrid(val grid : Grid2D) : JPanel() {
+class DrawGrid(val grid : Grid2D,
+               val color: Color = Color.CYAN
+) : JPanel() {
 
     private val squares: MutableList<Rectangle> = mutableListOf()
     private val blocks : MutableList<Rectangle> = mutableListOf()
     private val bestPath : MutableList<Rectangle> = mutableListOf()
+    private val visitedNodes : MutableList<Rectangle> = mutableListOf()
     private var source  = Rectangle()
     private var target = Rectangle()
     private val step = PREF_W/grid.nSquares
@@ -61,6 +69,13 @@ class DrawGrid(val grid : Grid2D) : JPanel() {
         }
     }
 
+    fun addVisitedNodes(nodes: MutableList<Int>) {
+        for (n in nodes){
+            val coor = grid.getCoordinates(n)
+            val rect = Rectangle(coor.second * step, coor.first * step, sqSize, sqSize)
+            visitedNodes.add(rect)
+        }
+    }
     fun setSource (row: Int, col: Int) {
         source = Rectangle(col * step, row * step, sqSize, sqSize)
     }
@@ -81,23 +96,35 @@ class DrawGrid(val grid : Grid2D) : JPanel() {
             g2.color = Color.BLACK
             g2.draw(rect)
         }
+        for (n in visitedNodes) {
+            g2.color = Color.BLACK
+            g2.draw(n)
+            g2.color =  Color(239, 229, 12)
+            g2.fill(n)
+        }
+
         for (step in bestPath) {
-            g2.color = Color.CYAN
+            g2.color = Color.BLACK
             g2.draw(step)
+            g2.color = color
             g2.fill(step)
         }
         for (b in blocks) {
             g2.color = Color.BLACK
             g2.draw(b)
+            g2.color =  Color(97, 106, 107)
             g2.fill(b)
         }
 
-        g2.color = Color.RED
+
+        g2.color = Color.BLACK
         g2.draw(source)
+        g2.draw(target)
+
+        g2.color = Color.RED
         g2.fill(source)
 
         g2.color = Color.GREEN
-        g2.draw(target)
         g2.fill(target)
     }
 
