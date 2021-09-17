@@ -20,13 +20,11 @@ class AStarTest {
             }
         }
 
-        val h: (Int, Int) -> Float = { x, y ->
-            val height = abs(x - y) / 4
-            val width = (x - y) % 4
-            sqrt((height * height + width * width).toFloat())
+        val h = Heuristic2D.manhattan(4)
 
-        }
         val path = AStar.targetShortestPath(graph, source = 0, target = 9, h)
+
+        println(path)
         assertTrue(path.removeFirst() == 0)
         assertTrue(path.removeFirst() == 1)
         assertTrue(path.removeFirst() == 5)
