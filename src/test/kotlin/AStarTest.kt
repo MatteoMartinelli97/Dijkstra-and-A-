@@ -24,7 +24,6 @@ class AStarTest {
 
         val path = AStar.targetShortestPath(graph, source = 0, target = 9, h)
 
-        println(path)
         assertTrue(path.removeFirst() == 0)
         assertTrue(path.removeFirst() == 1)
         assertTrue(path.removeFirst() == 5)
