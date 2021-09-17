@@ -27,6 +27,7 @@ dependencies {
     implementation ("de.topobyte:osm4j-pbf:0.1.1")
     implementation ("de.topobyte:osm4j-tbo:0.1.0")
     implementation ("de.topobyte:osm4j-geometry:0.1.0")
+    implementation("com.github.ajalt.clikt:clikt:3.1.0")
     testImplementation(kotlin("test"))
 }
 

@@ -84,6 +84,10 @@ class Grid2D(
      */
     fun getId(row: Int, col : Int) : Int {return nSquares * row + col}
     /**
+     * Returns the ID value of the square, given the coordinates as Pair(row, col)
+     */
+    fun getId(coor : Pair<Int, Int>) : Int {return nSquares * coor.first + coor.second}
+    /**
      * Returns the coordinates value as a [Pair] = (row, col), given the ID value of the square.
      */
     fun getCoordinates(id : Int) : Pair<Int, Int> {
