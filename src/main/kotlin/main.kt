@@ -95,7 +95,7 @@ class Compute : CliktCommand(name = "path") {
                     )
                 }
                 println("Total Dijkstra* time $timeD ns = ${timeD * 1E-9} s")
-                println(p.first)
+                println("Dijkstra path length = ${p.first.size}")
                 GridFrame(grid, p.first, p.second, color = Color(0, 0, 128), title = "Dijkstra")
             } else {
                 val p: ArrayDeque<Int>
@@ -107,6 +107,7 @@ class Compute : CliktCommand(name = "path") {
                     )
                 }
                 println("Total Dijkstra* time $timeD ns = ${timeD * 1E-9} s")
+                println("Dijkstra path length = ${p.size}")
                 GridFrame(grid, p, color = Color(0, 0, 128), title = "Dijkstra")
             }
 
@@ -121,8 +122,8 @@ class Compute : CliktCommand(name = "path") {
                         heuristic = h
                     )
                 }
-                println(p.first)
                 println("Total A* time $elapsed ns = ${elapsed * 1E-9} s")
+                println("A* path length = ${p.first.size}")
                 GridFrame(grid, p.first, p.second, color = Color(100, 149, 237), title = "A*")
             } else {
                 val p: ArrayDeque<Int>
@@ -135,6 +136,7 @@ class Compute : CliktCommand(name = "path") {
                     )
                 }
                 println("Total A* time $elapsed ns = ${elapsed * 1E-9} s")
+                println("A* path length = ${p.size}")
                 GridFrame(grid, p, color = Color(100, 149, 237), title = "A*")
             }
 

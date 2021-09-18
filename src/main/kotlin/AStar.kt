@@ -106,7 +106,6 @@ object AStar {
                 }
             }
         }
-        println(open)
         return Pair(buildPath(source, target, prev), visitedNodes)
     }
 
