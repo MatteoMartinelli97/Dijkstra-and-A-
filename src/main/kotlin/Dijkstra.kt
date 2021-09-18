@@ -130,6 +130,7 @@ object Dijkstra {
     fun targetShortestPath (g: Grid2D, source: Int, target : Int) : ArrayDeque<Int> {
         if (g.getCoordinates(source) in g.blocks) throw java.lang.RuntimeException("Given source is a block." +
                 " Cannot start finding shortest path")
+        if (g.getCoordinates(target) in g.blocks) println("Target is a block. No path will exist")
         return targetShortestPath(g.graph, source, target)
     }
 
@@ -192,6 +193,7 @@ object Dijkstra {
     fun visualTargetShortestPath (g: Grid2D, source: Int, target : Int) : Pair<ArrayDeque<Int>, MutableList<Int>> {
         if (g.getCoordinates(source) in g.blocks) throw java.lang.RuntimeException("Given source is a block." +
                 " Cannot start finding shortest path")
+        if (g.getCoordinates(target) in g.blocks) println("Target is a block. No path will exist")
         return visualTargetShortestPath(g.graph, source, target)
     }
 

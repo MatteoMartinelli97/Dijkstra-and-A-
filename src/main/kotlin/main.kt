@@ -64,10 +64,12 @@ class Compute : CliktCommand(name = "path") {
     override fun run() {
         val blocks: MutableList<Pair<Int, Int>>
         if (blocksFile == null) {
-            blocks = MutableList(16) { Pair(it + 5, 21) }
-            for (i in listOf(5, 20))
-                for (j in 5..20)
-                    blocks.add(Pair(i, j))
+            if (!randomBlocks) {
+                blocks = MutableList(16) { Pair(it + 5, 21) }
+                for (i in listOf(5, 20))
+                    for (j in 5..20)
+                        blocks.add(Pair(i, j))
+            } else blocks = mutableListOf()
         } else blocks = loadBlocks(blocksFile.toString())
 
         val h = when (heuristic) {
@@ -93,6 +95,7 @@ class Compute : CliktCommand(name = "path") {
                     )
                 }
                 println("Total Dijkstra* time $timeD ns = ${timeD * 1E-9} s")
+                println(p.first)
                 GridFrame(grid, p.first, p.second, color = Color(0, 0, 128), title = "Dijkstra")
             } else {
                 val p: ArrayDeque<Int>
@@ -118,6 +121,7 @@ class Compute : CliktCommand(name = "path") {
                         heuristic = h
                     )
                 }
+                println(p.first)
                 println("Total A* time $elapsed ns = ${elapsed * 1E-9} s")
                 GridFrame(grid, p.first, p.second, color = Color(100, 149, 237), title = "A*")
             } else {
@@ -160,6 +164,7 @@ class LoadFile : CliktCommand(name = "fileRun") {
         "--heuristic", "-h",
         help = "The heuristic function to use for A* algorithm"
     ).choice("trivial", "manhattan", "euclidean", "diagonal", ignoreCase = true)
+        .default("trivial")
     private val inputFile by option(
         "--input", "-i",
         help = "A file describing the grid. # normal squares, @ is the source, T is the target and X are the blocks"

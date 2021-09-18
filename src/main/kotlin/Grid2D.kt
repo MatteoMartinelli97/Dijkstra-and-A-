@@ -33,12 +33,12 @@ import kotlin.random.Random
 class Grid2D(
     val nSquares: Int,
     val blocks: MutableList<Pair<Int, Int>> = mutableListOf(),
-    val randomBlocks : Boolean = false
+    val randomBlocks: Boolean = false
 ) {
 
     private val V = (0 until nSquares * nSquares).toMutableList()
     val graph = Graph(V, directed = false)
-    val freeV : MutableList<Pair<Int, Int>> = mutableListOf()
+    val freeV: MutableList<Pair<Int, Int>> = mutableListOf()
     private val rand = Random.Default
 
     /**
@@ -46,12 +46,19 @@ class Grid2D(
      * If [randomBlocks] is true a random generators decides whether each square may become a block
      */
     init {
+        if (randomBlocks) {
+            for (i in 0 until nSquares * nSquares) {
+                if (rand.nextFloat() < 0.1) {
+                    val row = i / nSquares
+                    val col = i % nSquares
+                    addBlock(row, col)
+                }
+            }
+        }
+
         for (i in 0 until nSquares * nSquares) {
             val row = i / nSquares
             val col = i % nSquares
-            if (randomBlocks) {
-                if (rand.nextFloat() < 0.1) addBlock(row, col)
-            }
             //If block, no neighbour
             if (Pair(row, col) in blocks) continue
             if (row != nSquares - 1) {
@@ -82,15 +89,21 @@ class Grid2D(
     /**
      * Returns the ID value of the square, given the coordinates as (row, col)
      */
-    fun getId(row: Int, col : Int) : Int {return nSquares * row + col}
+    fun getId(row: Int, col: Int): Int {
+        return nSquares * row + col
+    }
+
     /**
      * Returns the ID value of the square, given the coordinates as Pair(row, col)
      */
-    fun getId(coor : Pair<Int, Int>) : Int {return nSquares * coor.first + coor.second}
+    fun getId(coor: Pair<Int, Int>): Int {
+        return nSquares * coor.first + coor.second
+    }
+
     /**
      * Returns the coordinates value as a [Pair] = (row, col), given the ID value of the square.
      */
-    fun getCoordinates(id : Int) : Pair<Int, Int> {
+    fun getCoordinates(id: Int): Pair<Int, Int> {
         val row = id / nSquares
         val col = id % nSquares
         return Pair(row, col)
