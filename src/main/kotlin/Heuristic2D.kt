@@ -7,7 +7,7 @@ import kotlin.math.sqrt
  * square is a node of the graph.
  * The name are given as [Int] numbers, from left to right, top to bottom as:
  *
- * +-----------------+
+ * +--------------+
  *
  * | 0 | 1 | 2| 3| 4 |
  *
@@ -21,7 +21,7 @@ import kotlin.math.sqrt
 
 
 
- * +-----------------+
+ * +--------------+
  */
 
 object Heuristic2D {

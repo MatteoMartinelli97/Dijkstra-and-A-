@@ -2,7 +2,6 @@ import java.lang.RuntimeException
 
 class Graph<T>(
     val V: MutableList<T> = mutableListOf(),
-    //val neighbours : MutableMap<Int, MutableMap<Int, Float>> = mutableMapOf(),
     val neighbours: MutableMap<T, MutableList<Pair<T, Float>>> = mutableMapOf(),
     val directed: Boolean = false
 ) {
@@ -11,29 +10,6 @@ class Graph<T>(
             neighbours[v] = mutableListOf()
         }
     }
-/*    fun addVertex (v : Int, edges : MutableMap<Int, Float>) {
-        V.add(v)
-        neighbours[v] = edges
-    }
-
-    fun addEdge (v : Int, u : Int, weight : Float) {
-        if (v in V) {
-            neighbours[v]!!.set(u, weight)
-            if (!directed) {
-                if (u in V ) {neighbours[u]!!.set(v, weight)}
-                else {throw RuntimeException("Trying to add edge of non existing vertex $u")}
-            }
-        }
-        else{
-            throw RuntimeException("Trying to add edge of non existing vertex $v")
-        }
-    }
-
-    fun length(a : Int, b: Int) : Float {
-        return neighbours[a]?.get(b) ?: Float.POSITIVE_INFINITY
-    }
-
- */
 
     fun addVertex(v: T, edges: MutableList<Pair<T, Float>> = mutableListOf()) {
         V.add(v)

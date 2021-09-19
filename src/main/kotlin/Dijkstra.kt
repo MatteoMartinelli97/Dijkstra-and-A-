@@ -1,4 +1,3 @@
-import java.awt.image.AreaAveragingScaleFilter
 import java.util.*
 import kotlin.collections.ArrayDeque
 
@@ -12,40 +11,11 @@ object Dijkstra {
         dist[source] = 0f
 
         val Q = PriorityQueue<Pair<Int, Float>>(
-             g.V.size,
-             compareBy { it.second }
-         )
-/*
-         //Initialize priority queues with distances from source
-         for (v in g.V) {
-             if (v != source) { dist[v] = g.length(source, v) }
-             Q.add(Pair(v, dist[v]!!))
-         }
+            g.V.size,
+            compareBy { it.second }
+        )
 
-        while (!Q.isEmpty()) {
-            //Choose min distance vertex
-            val u = Q.poll()
-
-            //For each neighbour still in Q
-            // re-evaluate distance from source with intermediate step 'u'
-            g.neighbours[u.first]?.keys?.forEach {
-                if (Pair(it, dist[it]!!) in Q) {
-                    val newDist = u.second + g.length(u.first, it)
-
-                    //If lesser than before, change the queue order, and update distance
-                    if (newDist < dist[it]!!) {
-                        Q.remove(Pair(it, dist[it]))
-                        dist[it] = newDist
-                        Q.add(Pair(it, newDist))
-                    }
-                }
-            }
-         }
-
-
- */
-
-        //g.neighbours[source]?.forEach { dist[it.first] = it.second }
+        g.neighbours[source]?.forEach { dist[it.first] = it.second }
         //Initialize priority queues with distances from source
         for (v in g.V) {
             if (v != source) {
@@ -74,7 +44,7 @@ object Dijkstra {
         return dist
     }
 
-    fun targetShortestPath (g: Graph<Int>, source: Int, target : Int) : ArrayDeque<Int>{
+    fun targetShortestPath(g: Graph<Int>, source: Int, target: Int): ArrayDeque<Int> {
         if (source !in g.V) {
             throw RuntimeException("Source ($source) is not in graph vertices, cannot compute path!")
         }
@@ -91,12 +61,12 @@ object Dijkstra {
             compareBy { it.second }
         )
 
-  /*      g.neighbours[source]?.forEach {
+        g.neighbours[source]?.forEach {
             dist[it.first] = it.second
             prev[it.first] = source
         }
 
-   */
+
         //Initialize priority queues with distances from source
         for (v in g.V) {
             if (v != source) {
@@ -107,7 +77,9 @@ object Dijkstra {
         while (!Q.isEmpty()) {
             //Choose min distance vertex
             val u = Q.poll()
-            if (u.first == target) {break}
+            if (u.first == target) {
+                break
+            }
             //For each neighbour still in Q
             // re-evaluate distance from source with intermediate step 'u'
             g.neighbours[u.first]?.forEach {
@@ -127,14 +99,16 @@ object Dijkstra {
         return buildPath(source, target, prev)
     }
 
-    fun targetShortestPath (g: Grid2D, source: Int, target : Int) : ArrayDeque<Int> {
-        if (g.getCoordinates(source) in g.blocks) throw java.lang.RuntimeException("Given source is a block." +
-                " Cannot start finding shortest path")
+    fun targetShortestPath(g: Grid2D, source: Int, target: Int): ArrayDeque<Int> {
+        if (g.getCoordinates(source) in g.blocks) throw java.lang.RuntimeException(
+            "Given source is a block." +
+                    " Cannot start finding shortest path"
+        )
         if (g.getCoordinates(target) in g.blocks) println("Target is a block. No path will exist")
         return targetShortestPath(g.graph, source, target)
     }
 
-    fun visualTargetShortestPath (g: Graph<Int>, source: Int, target : Int) : Pair<ArrayDeque<Int>, MutableList<Int>> {
+    fun visualTargetShortestPath(g: Graph<Int>, source: Int, target: Int): Pair<ArrayDeque<Int>, MutableList<Int>> {
         if (source !in g.V) {
             throw RuntimeException("Source ($source) is not in graph vertices, cannot compute path!")
         }
@@ -153,12 +127,12 @@ object Dijkstra {
             compareBy { it.second }
         )
 
-        /*      g.neighbours[source]?.forEach {
-                  dist[it.first] = it.second
-                  prev[it.first] = source
-              }
+        g.neighbours[source]?.forEach {
+            dist[it.first] = it.second
+            prev[it.first] = source
+        }
 
-         */
+
         //Initialize priority queues with distances from source
         for (v in g.V) {
             if (v != source) {
@@ -170,7 +144,9 @@ object Dijkstra {
             //Choose min distance vertex
             val u = Q.poll()
             visitedNodes.add(u.first)
-            if (u.first == target) {break}
+            if (u.first == target) {
+                break
+            }
             //For each neighbour still in Q
             // re-evaluate distance from source with intermediate step 'u'
             g.neighbours[u.first]?.forEach {
@@ -190,14 +166,16 @@ object Dijkstra {
         return Pair(buildPath(source, target, prev), visitedNodes)
     }
 
-    fun visualTargetShortestPath (g: Grid2D, source: Int, target : Int) : Pair<ArrayDeque<Int>, MutableList<Int>> {
-        if (g.getCoordinates(source) in g.blocks) throw java.lang.RuntimeException("Given source is a block." +
-                " Cannot start finding shortest path")
+    fun visualTargetShortestPath(g: Grid2D, source: Int, target: Int): Pair<ArrayDeque<Int>, MutableList<Int>> {
+        if (g.getCoordinates(source) in g.blocks) throw java.lang.RuntimeException(
+            "Given source is a block." +
+                    " Cannot start finding shortest path"
+        )
         if (g.getCoordinates(target) in g.blocks) println("Target is a block. No path will exist")
         return visualTargetShortestPath(g.graph, source, target)
     }
 
-    private fun buildPath (source : Int, target : Int, prev : MutableMap<Int, Int>) : ArrayDeque<Int> {
+    private fun buildPath(source: Int, target: Int, prev: MutableMap<Int, Int>): ArrayDeque<Int> {
         val path = ArrayDeque<Int>()
         var u = target
         path.add(u)
