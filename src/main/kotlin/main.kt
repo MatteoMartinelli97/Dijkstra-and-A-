@@ -161,7 +161,7 @@ class LoadFile : CliktCommand(name = "fileRun") {
     private val visualization by option(
         "--visualization", "-v",
         help = "If true displays visited nodes along the search"
-    ).flag(default = true)
+    ).flag(default = false)
     private val heuristic by option(
         "--heuristic", "-h",
         help = "The heuristic function to use for A* algorithm"
